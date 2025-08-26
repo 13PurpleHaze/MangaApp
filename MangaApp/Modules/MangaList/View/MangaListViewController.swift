@@ -190,6 +190,7 @@ extension MangaListViewController: UISearchBarDelegate {
     @objc func openFilter() {
         presenter.openFilter {
             self.presenter.fetchFilterFields()
+            self.page = 1
             self.presenter.fetchMangas()
         }
     }
@@ -237,6 +238,7 @@ extension MangaListViewController: MangaListViewInput {
     }
     
     func updateUI(state: ViewState) {
+        print(state, page)
         switch state {
         case .isFetching:
             banner.hide()

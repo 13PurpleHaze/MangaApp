@@ -27,7 +27,7 @@ class MangaCell: UICollectionViewCell {
         titleLabel.text = title
         let url = URL(string: imageURL!)!
         imageView.kf.indicatorType = .activity
-       
+        DispatchQueue.main.async {
             self.imageView.kf.setImage(
                 with: url,
                 options: [
@@ -35,8 +35,7 @@ class MangaCell: UICollectionViewCell {
                     .retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(3)))
                 ]
             )
-        
-        
+        }
         imageView.kf.indicatorType = .activity
     }
     

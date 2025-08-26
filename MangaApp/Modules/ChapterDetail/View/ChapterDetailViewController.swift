@@ -48,7 +48,6 @@ class ChapterDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = false
-        tabBarController?.tabBar.isHidden = false
     }
     
     private func setupNavBar() {
