@@ -2,7 +2,7 @@
 
 <div align="center">
     <img src="./arts/HomeScreen.png" alt="Mobile view" width="250"/>
-    <img src="./arts/MangaKist.png" alt="Mobile view" width="250"/>
+    <img src="./arts/MangaList.png" alt="Mobile view" width="250"/>
     <img src="./arts/Filter.png" alt="Mobile view" width="250"/>
     <img src="./arts/History.png" alt="Mobile view" width="250"/>
     <img src="./arts/MangaDetail.png" alt="Mobile view" width="250"/>
