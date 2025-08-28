@@ -5,8 +5,8 @@
 //  Created by Никита Новицкий on 20.08.2025.
 //
 
-import UIKit
 import Swinject
+import UIKit
 
 class ChapterAssambly: Assembly {
     func assemble(container: Swinject.Container) {

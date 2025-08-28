@@ -20,7 +20,7 @@ extension MangaDetailCoordinator: MangaDetailPresenterOutput {
         addChildCoordinator(coordinator)
         coordinator.start(mangaID: mangaID)
     }
-    
+
     func goBack() {
         navigationController.popViewController(animated: true)
     }

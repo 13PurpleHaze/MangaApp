@@ -12,7 +12,7 @@ protocol HistoryPresenterOutput: AnyObject {
 class HistoryPresenter: HistoryViewOutput {
     weak var view: HistoryViewInput?
     weak var delegate: HistoryPresenterOutput?
-    
+
     private let historyService: HistoryServiceProtocol
     var history: [String] = []
     var state: ViewState = .isFetching {
@@ -20,16 +20,16 @@ class HistoryPresenter: HistoryViewOutput {
             view?.updateUI(state: state)
         }
     }
-    
+
     init(historyService: HistoryServiceProtocol) {
         self.historyService = historyService
     }
-    
+
     func didSelect(text: String) {
         print(delegate)
         delegate?.didSelect(text: text)
     }
-    
+
     func fetchHistory() {
         state = .isFetching
         historyService.fetchRequests { history in
@@ -37,7 +37,7 @@ class HistoryPresenter: HistoryViewOutput {
             self.state = .isSuccess
         }
     }
-    
+
     func removeHistoryRequest(text: String) {
         historyService.removeRequest(text: text)
         history.removeAll { $0 == text }

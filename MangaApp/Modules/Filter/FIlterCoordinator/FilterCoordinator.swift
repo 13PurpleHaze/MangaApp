@@ -9,7 +9,7 @@ import UIKit
 
 class FilterCoordinator: BaseCoordinator {
     var onApply: (() -> Void)?
-    
+
     override func start() {
         let vc = resolver.resolve(FilterViewController.self)!
         vc.onFinish = onApply

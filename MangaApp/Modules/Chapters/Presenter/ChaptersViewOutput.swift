@@ -15,7 +15,7 @@ protocol ChaptersViewOutput: AnyObject {
 
     var chaptersByVolume: [String: [Chapter]] { get }
     var chapters: [Chapter] { get }
-    
+
     func fetchChapters(mangaID: String, translated: Bool, limit: Int, offset: Int)
     func openChapter(chapterID: String, chapterNumber: Int)
 }

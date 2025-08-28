@@ -10,22 +10,23 @@ import UIKit
 class DescriptionCell: UICollectionViewCell {
     static let reuseIdentifier = "DescriptionCell"
     private let descriptionLabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup() {
         descriptionLabel.font = .preferredFont(forTextStyle: .body)
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         contentView.addSubview(descriptionLabel)
-        
+
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -33,7 +34,7 @@ class DescriptionCell: UICollectionViewCell {
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
-    
+
     func configure(text: String) {
         descriptionLabel.text = text
     }

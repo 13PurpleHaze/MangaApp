@@ -10,7 +10,7 @@ protocol ChapterDetailViewOutput: AnyObject {
     var delegate: ChapterDetailPresenterOutput? { get set }
     var chapterService: ChapterServiceProtocol { get }
     var chapters: [String] { get }
-    
+
     func fetchChapter(chapterID: String)
     func goBack()
 }

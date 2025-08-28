@@ -1,0 +1,6 @@
+--exclude "Pods/**"
+--exclude "DerivedData/**"
+--exclude "*.xcodeproj/**"
+--exclude "*.xcworkspace/**"
+--exclude "arts/**"
+--exclude "README.md"

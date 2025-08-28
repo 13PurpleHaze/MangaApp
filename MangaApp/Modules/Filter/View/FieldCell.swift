@@ -10,16 +10,17 @@ import UIKit
 class FieldCell: UICollectionViewCell {
     static let reuseIdentifier = "FieldCell"
     private let button = UIButton()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -31,11 +32,11 @@ class FieldCell: UICollectionViewCell {
             }
         }
     }
-    
+
     func setTitle(_ title: String) {
         button.setTitle(title, for: .normal)
     }
-    
+
     private func configure() {
         button.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(button)

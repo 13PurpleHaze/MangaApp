@@ -10,7 +10,7 @@ import UIKit
 
 class FavoritesAssambly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(FavoritesViewController.self) { r in
+        container.register(FavoritesViewController.self) { _ in
             FavoritesViewController()
         }
     }

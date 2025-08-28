@@ -12,28 +12,29 @@ class ChaptersViewController: UIViewController {
     private var page = 1
     private let limit = 10
     var mangaID: String?
-    
+
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<String, Chapter>!
     private var loader = BackgroundLoader()
     private var banner = Banner()
     private let stackView = UIStackView()
     private var translated = false
-    
+
     init(presenter: ChaptersViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
+
     private func setupUI() {
         view.backgroundColor = .systemBackground
         navigationItem.backButtonDisplayMode = .minimal
@@ -41,7 +42,7 @@ class ChaptersViewController: UIViewController {
         setupCollectionView()
         fetchChapters()
     }
-    
+
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
         collectionView.showsVerticalScrollIndicator = false
@@ -49,17 +50,17 @@ class ChaptersViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(ChapterCell.self, forCellWithReuseIdentifier: ChapterCell.reuseIdentifier)
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
-        
+
         view.addSubview(collectionView)
-        
+
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
-        
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { (collectionView, indexPath, item) in
+
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChapterCell.reuseIdentifier, for: indexPath) as? ChapterCell else {
                 return UICollectionViewCell()
             }
@@ -72,8 +73,8 @@ class ChaptersViewController: UIViewController {
             )
             return cell
         }
-        
-        dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             if kind == UICollectionView.elementKindSectionHeader {
                 guard let section = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as? SectionHeader else {
                     return UICollectionReusableView()
@@ -87,24 +88,23 @@ class ChaptersViewController: UIViewController {
             }
         }
     }
-    
-    private func makeLayout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
 
+    private func makeLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { _, _ -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .absolute(44)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
+
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: groupSize,
                 subitems: [item]
             )
-            
+
             let section = NSCollectionLayoutSection(group: group)
-            
+
             let headerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .estimated(44)
@@ -116,13 +116,13 @@ class ChaptersViewController: UIViewController {
             )
             header.contentInsets = .init(top: 8, leading: 16, bottom: 0, trailing: 0)
             section.boundarySupplementaryItems = [header]
-        
+
             return section
         }
-        
+
         return layout
     }
-    
+
     func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<String, Chapter>()
         presenter.chaptersByVolume.keys
@@ -137,25 +137,25 @@ class ChaptersViewController: UIViewController {
 
         dataSource.apply(snapshot, animatingDifferences: true)
     }
-    
+
     private func setupSwitch() {
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
-        
+
         let titleLabel = UILabel()
         titleLabel.text = "Translated chapters".localizable()
         titleLabel.font = .preferredFont(forTextStyle: .title3)
-        
+
         let switchView = UISwitch()
         switchView.isOn = translated
         switchView.addTarget(self, action: #selector(handleSwitchValueChanged), for: .valueChanged)
-        
+
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(switchView)
-        
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -163,7 +163,7 @@ class ChaptersViewController: UIViewController {
             stackView.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
-    
+
     @objc func handleSwitchValueChanged() {
         translated.toggle()
         page = 1
@@ -172,6 +172,7 @@ class ChaptersViewController: UIViewController {
 }
 
 // MARK: - Presenter
+
 extension ChaptersViewController {
     private func fetchChapters() {
         presenter.fetchChapters(mangaID: mangaID!, translated: translated, limit: limit, offset: (page - 1) * limit)
@@ -179,18 +180,18 @@ extension ChaptersViewController {
 }
 
 extension ChaptersViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if presenter.state != .isEndReached && indexPath.section + 1 == collectionView.numberOfSections && presenter.state != .isFetching && presenter.chapters.count >= limit {
+    func collectionView(_ collectionView: UICollectionView, willDisplay _: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if presenter.state != .isEndReached, indexPath.section + 1 == collectionView.numberOfSections, presenter.state != .isFetching, presenter.chapters.count >= limit {
             page += 1
             fetchChapters()
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let snapshot = self.dataSource.snapshot()
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let snapshot = dataSource.snapshot()
         let volume = snapshot.sectionIdentifiers[indexPath.section]
         guard let chapters = presenter.chaptersByVolume[volume] else { return }
-        
+
         presenter.openChapter(
             chapterID: chapters[indexPath.item].id,
             chapterNumber: Int(chapters[indexPath.item].attributes.chapter ?? "0") ?? 0

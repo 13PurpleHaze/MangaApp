@@ -15,47 +15,48 @@ enum MangaSection: String, Hashable, CaseIterable {
 
 class HomeViewController: UIViewController {
     let presenter: HomeViewOutput
-    
+
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<MangaSection, Manga>!
     private var loader = BackgroundLoader()
     private var banner = Banner()
-    
+
     init(presenter: HomeViewOutput) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         fetchHomeMangas()
     }
-    
+
     private func configureUI() {
         navigationItem.backButtonDisplayMode = .minimal
         configureCollectionView()
     }
-    
+
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.register(MangaCell.self, forCellWithReuseIdentifier: MangaCell.reuseIdentifier)
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
         collectionView.showsVerticalScrollIndicator = false
-        
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { (collectionView, indexPath, item) in
+
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MangaCell.reuseIdentifier, for: indexPath) as? MangaCell else {
                 return UICollectionViewCell()
             }
-            
+
             cell.setValues(title: item.title, imageURL: item.coverImageURL)
             return cell
         }
-        dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             guard kind == UICollectionView.elementKindSectionHeader else {
                 return UICollectionReusableView()
             }
@@ -65,7 +66,7 @@ class HomeViewController: UIViewController {
             section.setTitle(title: self.dataSource.snapshot().sectionIdentifiers[indexPath.section].rawValue.localizable())
             return section
         }
-        
+
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alpha = 0
@@ -74,36 +75,36 @@ class HomeViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-    
+
     private func createLayout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            
+        let layout = UICollectionViewCompositionalLayout { _, _ -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
+
             let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(200))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            
+
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = 16
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
             section.orthogonalScrollingBehavior = .continuous
-            
+
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(60))
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,
                 elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top)
+                alignment: .top
+            )
             section.boundarySupplementaryItems = [header]
-            
+
             return section
         }
         return layout
     }
-    
+
     func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<MangaSection, Manga>()
         snapshot.appendSections([.highestRated, .mostPopular, .new])
@@ -116,7 +117,7 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
             presenter.openDetail(manga: presenter.highestRatedManga[indexPath.item])
@@ -129,7 +130,6 @@ extension HomeViewController: UICollectionViewDelegate {
         }
     }
 }
-
 
 extension HomeViewController: HomeViewInput {
     func updateUI(state: ViewState) {

@@ -9,7 +9,7 @@ import UIKit
 
 class MangaListViewController: UIViewController {
     var presenter: MangaListViewOutput
-    
+
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Int, Manga>!
     private let refreshControll = UIRefreshControl()
@@ -20,22 +20,23 @@ class MangaListViewController: UIViewController {
     private var banner = Banner()
 
     private var page = 1
-    
+
     init(presenter: MangaListViewOutput, historyViewController: HistoryViewController) {
         self.presenter = presenter
         self.historyViewController = historyViewController
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
+
     private func setupUI() {
         setupContainerView()
         setupNavBar()
@@ -44,21 +45,22 @@ class MangaListViewController: UIViewController {
         presenter.fetchFilterFields()
         fetchMangas()
     }
-    
+
     private func setupContainerView() {
         containerView.frame = view.frame
         containerView.center = view.center
         containerView.backgroundColor = .systemBackground
         view.addSubview(containerView)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
+
+    override func viewWillDisappear(_: Bool) {
         presenter.filter.search = nil
         presenter.saveFilter()
     }
 }
 
 // MARK: - History
+
 extension MangaListViewController: HistoryPresenterOutput {
     private func setupHistoryView() {
         addChild(historyViewController)
@@ -68,27 +70,27 @@ extension MangaListViewController: HistoryPresenterOutput {
         historyView.alpha = 0
         view.addSubview(historyView)
     }
-    
+
     func didSelect(text: String) {
         guard let searchBar = navigationItem.searchController?.searchBar else { return }
         searchBar.text = text
-        
+
         presenter.filter.search = text
         presenter.saveFilter()
-        
+
         fetchMangas()
-        
+
         UIView.animate(withDuration: 0.3) {
             self.containerView.alpha = 1
             self.historyViewController.view.alpha = 0
         }
-        
+
         searchBar.resignFirstResponder()
     }
-    
 }
 
 // MARK: - CollectionView
+
 extension MangaListViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
@@ -98,20 +100,20 @@ extension MangaListViewController {
         collectionView.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: SectionFooter.reuseIdentifier)
         collectionView.delegate = self
         containerView.addSubview(collectionView)
-        
+
         refreshControll.addTarget(self, action: #selector(refreshMangas), for: .valueChanged)
         collectionView.refreshControl = refreshControll
-        
+
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MangaCell.reuseIdentifier, for: indexPath) as? MangaCell else {
                 return UICollectionViewCell()
             }
-            
+
             cell.setValues(title: item.title, imageURL: item.coverImageURL)
             return cell
         }
-        
-        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+
+        dataSource.supplementaryViewProvider = { _, kind, indexPath in
             if kind == UICollectionView.elementKindSectionFooter {
                 guard let footer = self.collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionFooter.reuseIdentifier, for: indexPath) as? SectionFooter else {
                     return UICollectionReusableView()
@@ -121,7 +123,7 @@ extension MangaListViewController {
             }
             return nil
         }
-        
+
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -129,7 +131,7 @@ extension MangaListViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-    
+
     private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: (view.bounds.width - 32 - 16) / 2, height: 250)
@@ -139,14 +141,14 @@ extension MangaListViewController {
         layout.footerReferenceSize = CGSize(width: view.bounds.width, height: 60)
         return layout
     }
-    
+
     func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Manga>()
         snapshot.appendSections([0])
         snapshot.appendItems(presenter.mangas, toSection: 0)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
-    
+
     @objc func refreshMangas() {
         page = 1
         presenter.filter.offset = (page - 1) * presenter.filter.limit
@@ -156,8 +158,8 @@ extension MangaListViewController {
 }
 
 extension MangaListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item > presenter.mangas.count - 5 && presenter.mangas.count >= 10 {
+    func collectionView(_: UICollectionView, willDisplay _: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item > presenter.mangas.count - 5, presenter.mangas.count >= 10 {
             if presenter.state != .isFetching {
                 page += 1
                 presenter.filter.offset = (page - 1) * presenter.filter.limit
@@ -165,13 +167,14 @@ extension MangaListViewController: UICollectionViewDelegate {
             }
         }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter.openDetail(index: indexPath.row)
     }
 }
 
 // MARK: - NavBar setup
+
 extension MangaListViewController: UISearchBarDelegate {
     private func setupNavBar() {
         navigationItem.searchController = UISearchController()
@@ -180,13 +183,13 @@ extension MangaListViewController: UISearchBarDelegate {
 
         let button = UIButton()
         button.setImage(UIImage(systemName: "line.3.horizontal.decrease")?.withTintColor(.label, renderingMode: .alwaysOriginal), for: .normal)
-        
+
         filterButton = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = filterButton
 
         button.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
     }
-    
+
     @objc func openFilter() {
         presenter.openFilter {
             self.presenter.fetchFilterFields()
@@ -194,15 +197,15 @@ extension MangaListViewController: UISearchBarDelegate {
             self.presenter.fetchMangas()
         }
     }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+
+    func searchBarTextDidBeginEditing(_: UISearchBar) {
         UIView.animate(withDuration: 0.3) {
             self.containerView.alpha = 0
             self.historyViewController.view.alpha = 1
         }
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+
+    func searchBarCancelButtonClicked(_: UISearchBar) {
         presenter.filter.search = nil
         presenter.saveFilter()
         UIView.animate(withDuration: 0.3) {
@@ -210,7 +213,7 @@ extension MangaListViewController: UISearchBarDelegate {
             self.historyViewController.view.alpha = 0
         }
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         presenter.filter.search = searchBar.searchTextField.text
         presenter.saveFilter()
@@ -223,6 +226,7 @@ extension MangaListViewController: UISearchBarDelegate {
 }
 
 // MARK: - Fetch mangas
+
 extension MangaListViewController {
     private func fetchMangas() {
         presenter.filter.offset = presenter.filter.limit * (page - 1)
@@ -231,12 +235,13 @@ extension MangaListViewController {
 }
 
 // MARK: - MangaListViewInput
+
 extension MangaListViewController: MangaListViewInput {
-    func setFilter(filter: Filter) {
+    func setFilter(filter _: Filter) {
         let count = countNotNilAndNotEmptyFields(of: presenter.filter)
         filterButton.setBadge(text: count > 0 ? "\(count)" : nil)
     }
-    
+
     func updateUI(state: ViewState) {
         print(state, page)
         switch state {
@@ -267,6 +272,5 @@ extension MangaListViewController: MangaListViewInput {
                 applySnapshot()
             }
         }
-        
     }
 }

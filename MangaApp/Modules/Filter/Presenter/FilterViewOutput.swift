@@ -10,7 +10,7 @@ protocol FilterViewOutput: AnyObject {
     var view: FilterViewInput? { get set }
     var filterValues: FilterValues { get set }
     var filter: Filter { get set }
-    
+
     func loadFilter()
     func clearFilter()
     func saveFilter()

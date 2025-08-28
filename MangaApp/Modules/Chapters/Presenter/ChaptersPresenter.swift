@@ -20,26 +20,26 @@ class ChaptersPresenter: ChaptersViewOutput {
             view?.updateUI(state: state)
         }
     }
-    
+
     var chaptersByVolume: [String: [Chapter]] = [:]
     var chapters: [Chapter] = []
 
     init(chapterService: ChapterServiceProtocol) {
         self.chapterService = chapterService
     }
-    
+
     func fetchChapters(mangaID: String, translated: Bool, limit: Int, offset: Int) {
         state = .isFetching
         let language = translated ? Locale.current.language.languageCode?.identifier ?? "en" : "en"
         chapterService.fetchChapters(mangaID: mangaID, limit: limit, offset: offset, language: language) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let chapters):
+                case let .success(chapters):
                     if offset == 0 {
                         self.chapters.removeAll()
                         self.chaptersByVolume.removeAll()
                     }
-                    chapters.forEach { chapter in
+                    for chapter in chapters {
                         let volumeKey = chapter.attributes.volume ?? "0"
                         print(volumeKey)
                         if self.chaptersByVolume[volumeKey] == nil {
@@ -47,17 +47,17 @@ class ChaptersPresenter: ChaptersViewOutput {
                         }
                         self.chaptersByVolume[volumeKey]?.append(chapter)
                     }
-                    
+
                     self.chapters.append(contentsOf: chapters)
                     print(self.chaptersByVolume)
                     self.state = chapters.count < limit ? .isEndReached : .isSuccess
-                case .failure(let error):
+                case let .failure(error):
                     self.state = .isError
                 }
             }
         }
     }
-    
+
     func openChapter(chapterID: String, chapterNumber: Int) {
         delegate?.openChapter(chapterID: chapterID, chapterNumber: chapterNumber)
     }

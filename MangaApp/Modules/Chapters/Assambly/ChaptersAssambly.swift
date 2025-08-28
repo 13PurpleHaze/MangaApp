@@ -5,8 +5,8 @@
 //  Created by Никита Новицкий on 19.08.2025.
 //
 
-import UIKit
 import Swinject
+import UIKit
 
 class ChaptersAssambly: Assembly {
     func assemble(container: Swinject.Container) {
@@ -17,6 +17,4 @@ class ChaptersAssambly: Assembly {
             return vc
         }
     }
-    
-    
 }

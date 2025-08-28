@@ -5,8 +5,8 @@
 //  Created by Никита Новицкий on 13.08.2025.
 //
 
-import UIKit
 import Swinject
+import UIKit
 
 class MangaDetailAssambly: Assembly {
     func assemble(container: Swinject.Container) {
