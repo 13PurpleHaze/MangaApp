@@ -5,8 +5,8 @@
 //  Created by Никита Новицкий on 12.08.2025.
 //
 
-import UIKit
 import Swinject
+import UIKit
 
 class HistoryAssambly: Assembly {
     func assemble(container: Swinject.Container) {

@@ -9,17 +9,17 @@ import Swinject
 
 class RootAssambly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(NetworkManagerProtocol.self) { r in NetworkManager() }
+        container.register(NetworkManagerProtocol.self) { _ in NetworkManager() }
         container.register(MangaServiceProtocol.self) { r in
             MangaService(networkManager: r.resolve(NetworkManagerProtocol.self)!)
         }
-        container.register(FilterServiceProtocol.self) { r in
+        container.register(FilterServiceProtocol.self) { _ in
             FilterService()
         }
         container.register(ChapterServiceProtocol.self) { r in
             ChapterService(networkManager: r.resolve(NetworkManagerProtocol.self)!)
         }
-        container.register(HistoryServiceProtocol.self) { r in
+        container.register(HistoryServiceProtocol.self) { _ in
             HistoryService()
         }
     }

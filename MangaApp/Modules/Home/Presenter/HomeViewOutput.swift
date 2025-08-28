@@ -12,7 +12,7 @@ protocol HomeViewOutput: AnyObject {
     var newManga: [Manga] { get }
     var highestRatedManga: [Manga] { get }
     var delegate: HomePresenterOutput? { get set }
-    
+
     func openDetail(manga: Manga)
     func fetchManga()
 }

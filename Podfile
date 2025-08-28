@@ -8,4 +8,6 @@ target 'MangaApp' do
   # Pods for MangaApp
   pod 'Kingfisher'
   pod 'Swinject'
+  pod 'SwiftLint'
+  pod 'SwiftFormat/CLI'
 end

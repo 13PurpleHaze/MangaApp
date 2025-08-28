@@ -20,7 +20,7 @@ struct FilterValues {
     var order: [MangaOrder] = [.date, .rating, .views]
     var contentRating: [MangaContentRating] = [.safe, .suggestive, .erotica]
     var status: [MangaStatus] = [.ongoing, .completed, .hiatus, .cancelled]
-    
+
     var fieldsCount = 3
 }
 
@@ -33,15 +33,15 @@ extension LocalizedFilterField {
     var localized: String {
         return rawValue.localizable()
     }
-    
+
     init?(localizedString: String) {
         guard let foundCase = Self.allCases.first(where: {
-           $0.localized == localizedString
-       }) else {
-           return nil
-       }
-       self = foundCase
-   }
+            $0.localized == localizedString
+        }) else {
+            return nil
+        }
+        self = foundCase
+    }
 }
 
 enum MangaOrder: String, CaseIterable, LocalizedFilterField {

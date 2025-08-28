@@ -13,36 +13,31 @@ protocol NetworkManagerProtocol {
 
 class NetworkManager: NetworkManagerProtocol {
     func fetch<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            //print("Error")
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
-                completion(.failure(NetworkError.NetworkError))
+                completion(.failure(NetworkError.networkError))
                 return
             }
-            //print("No Error")
             guard let response = response as? HTTPURLResponse else {
-                completion(.failure(NetworkError.NetworkError))
+                completion(.failure(NetworkError.networkError))
                 return
             }
-            //print("Good res")
             switch response.statusCode {
-            case 200..<300:
-                //print("Data")
+            case 200 ..< 300:
                 guard let data = data else {
-                    completion(.failure(NetworkError.NetworkError))
+                    completion(.failure(NetworkError.networkError))
                     return
                 }
-                //print("Good data")
                 do {
                     let result = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(result))
                     return
                 } catch {
-                    completion(.failure(NetworkError.NetworkError))
+                    completion(.failure(NetworkError.networkError))
                     return
                 }
             default:
-                completion(.failure(NetworkError.InternalServerError))
+                completion(.failure(NetworkError.internalServerError))
                 return
             }
         }

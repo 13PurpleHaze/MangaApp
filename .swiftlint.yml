@@ -1,0 +1,15 @@
+included:
+  - MangaApp
+
+excluded:
+  - Pods
+  - DerivedData
+  - MangaApp.xcodeproj
+  - MangaApp.xcworkspace
+  - arts
+  - Build
+  - Carthage
+
+identifier_name:
+  min_length: 1
+  max_length: 40

@@ -21,26 +21,26 @@ class ChapterDetailPresenter: ChapterDetailViewOutput {
             view?.updateUI(state: state)
         }
     }
-    
+
     init(chapterService: any ChapterServiceProtocol) {
         self.chapterService = chapterService
     }
-    
+
     func fetchChapter(chapterID: String) {
         state = .isFetching
         chapterService.fetchChapterByID(chapterID: chapterID) { response in
             DispatchQueue.main.async {
                 switch response {
-                case .success(let chapters):
+                case let .success(chapters):
                     self.chapters = chapters
                     self.state = .isSuccess
-                case .failure(let error):
+                case let .failure(error):
                     self.state = .isError
                 }
             }
         }
     }
-    
+
     func goBack() {
         delegate?.goBack()
     }

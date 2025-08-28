@@ -17,24 +17,24 @@ class FilterPresenter: FilterViewOutput {
     weak var delegate: FilterPresenterOutput?
     var filterValues = FilterValues()
     var filter = Filter()
-    
+
     init(filterService: FilterServiceProtocol) {
         self.filterService = filterService
     }
-    
+
     func loadFilter() {
         filter = filterService.fetchFields()
         view?.setSelectedFields()
     }
-    
+
     func saveFilter() {
         filterService.saveFields(filter: filter)
     }
-    
+
     func closeFilter() {
         delegate?.closeFilter()
     }
-    
+
     func clearFilter() {
         filter.order = nil
         filter.contentRating = []

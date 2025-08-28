@@ -19,14 +19,14 @@ class FilterService: FilterServiceProtocol {
         UserDefaults.standard.set(filter.order?.rawValue, forKey: "filter.order")
         UserDefaults.standard.set(filter.search, forKey: "filter.search")
     }
-    
+
     func fetchFields() -> Filter {
         var filter = Filter()
-        if let contentRating = UserDefaults.standard.object(forKey: "filter.contentRating") as? NSArray {
-            filter.contentRating = (contentRating.map { MangaContentRating(rawValue: $0 as! String)} as? Array)!
+        if let contentRating = UserDefaults.standard.object(forKey: "filter.contentRating") as? [String] {
+            filter.contentRating = contentRating.map { MangaContentRating(rawValue: $0) ?? .safe }
         }
-        if let status = UserDefaults.standard.object(forKey: "filter.status") as? NSArray {
-            filter.status = (status.map { MangaStatus(rawValue: $0 as! String)} as? Array)!
+        if let status = UserDefaults.standard.object(forKey: "filter.status") as? [String] {
+            filter.status = status.map { MangaStatus(rawValue: $0) ?? .completed }
         }
         if let order = UserDefaults.standard.object(forKey: "filter.order") as? String {
             filter.order = MangaOrder(rawValue: order)

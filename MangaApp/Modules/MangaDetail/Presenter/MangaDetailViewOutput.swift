@@ -8,7 +8,7 @@
 protocol MangaDetailViewOutput: AnyObject {
     var view: MangaDetailViewInput? { get set }
     var delegate: MangaDetailPresenterOutput? { get set }
-    
+
     func goBack()
     func openChaptersList(mangaID: String)
 }

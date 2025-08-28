@@ -7,7 +7,7 @@
 
 protocol MangaListViewInput: AnyObject {
     var presenter: MangaListViewOutput { get }
-    
+
     func setFilter(filter: Filter)
     func updateUI(state: ViewState)
 }

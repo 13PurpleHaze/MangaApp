@@ -14,26 +14,29 @@ class NavBarReusableView: UICollectionReusableView {
         label.font = .preferredFont(forTextStyle: .headline)
         return label
     }()
+
     private let backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         return button
     }()
+
     private let likeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         return button
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup() {
         backgroundColor = .systemBackground
         let stack = UIStackView()
@@ -44,7 +47,7 @@ class NavBarReusableView: UICollectionReusableView {
         stack.addArrangedSubview(titleLabel)
         stack.addArrangedSubview(likeButton)
         addSubview(stack)
-        
+
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -52,7 +55,7 @@ class NavBarReusableView: UICollectionReusableView {
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
+
     func configure(title: String, onGoBackAction: @escaping () -> Void, onLikeAction: @escaping () -> Void) {
         titleLabel.text = title
         backButton.addAction(UIAction { _ in

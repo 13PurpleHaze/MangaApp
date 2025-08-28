@@ -11,7 +11,7 @@ class MangaListCoordinator: BaseCoordinator {
         vc.presenter.delegate = self
         navigationController.pushViewController(vc, animated: true)
     }
-    
+
     func openFilter(onApply: @escaping () -> Void) {
         let filterCoordinator = FilterCoordinator(navigationController: navigationController, resolver: resolver)
         filterCoordinator.onApply = onApply
@@ -26,7 +26,7 @@ extension MangaListCoordinator: MangaListPresenterOutput {
         addChildCoordinator(mangaDetailCoordinator)
         mangaDetailCoordinator.start(manga: manga)
     }
-    
+
     func didTapFilter(onApply: @escaping () -> Void) {
         openFilter(onApply: onApply)
     }

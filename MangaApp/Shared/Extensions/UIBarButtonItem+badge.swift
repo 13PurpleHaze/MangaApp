@@ -18,7 +18,7 @@ extension UIBarButtonItem {
         }
     }
 
-    func setBadge(text: String?, offset: CGPoint = .zero, color: UIColor = .red, filled: Bool = true, fontSize: CGFloat = 11.0) {
+    func setBadge(text: String?, offset: CGPoint = .zero, color: UIColor = .red, filled: Bool = true, fontSize _: CGFloat = 11.0) {
         badgeLayer?.removeFromSuperlayer()
 
         guard let text = text, !text.isEmpty else {
@@ -28,7 +28,7 @@ extension UIBarButtonItem {
     }
 
     private func addBadge(text: String, offset: CGPoint = .zero, color: UIColor = .red, filled: Bool = true, fontSize: CGFloat = 11) {
-        guard let view = self.value(forKey: "view") as? UIView else {
+        guard let view = value(forKey: "view") as? UIView else {
             return
         }
 
@@ -76,13 +76,12 @@ extension UIBarButtonItem {
         objc_setAssociatedObject(self, &handle, badge, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
         // bring layer to front
-        badge.zPosition = 1_000
+        badge.zPosition = 1000
     }
 
     private func removeBadge() {
         badgeLayer?.removeFromSuperlayer()
     }
-
 }
 
 // MARK: - Utilities

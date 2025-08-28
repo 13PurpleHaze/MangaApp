@@ -15,18 +15,18 @@ protocol HistoryServiceProtocol {
 
 class HistoryService: HistoryServiceProtocol {
     func addRequest(text: String) {
-        var history = UserDefaults.standard.object(forKey: "history") as? Array<String> ?? []
+        var history = UserDefaults.standard.object(forKey: "history") as? [String] ?? []
         history.append(text)
         UserDefaults.standard.set(history, forKey: "history")
     }
-    
+
     func removeRequest(text: String) {
-        let history = UserDefaults.standard.object(forKey: "history") as? Array<String> ?? []
+        let history = UserDefaults.standard.object(forKey: "history") as? [String] ?? []
         UserDefaults.standard.set(history.filter { $0 != text }, forKey: "history")
     }
-    
+
     func fetchRequests(completion: @escaping ([String]) -> Void) {
-        let history = UserDefaults.standard.object(forKey: "history") as? Array<String> ?? []
+        let history = UserDefaults.standard.object(forKey: "history") as? [String] ?? []
         completion(history.reversed())
     }
 }

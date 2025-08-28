@@ -6,7 +6,7 @@
 //
 
 enum NetworkError: String, Error {
-    case InternalServerError = "Internal Server Error"
-    case InternetConnectionFailed = "Internet Connection Failed"
-    case NetworkError = "Network Error"
+    case internalServerError = "Internal Server Error"
+    case internetConnectionFailed = "Internet Connection Failed"
+    case networkError = "Network Error"
 }

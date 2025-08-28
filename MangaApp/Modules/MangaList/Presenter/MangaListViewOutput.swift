@@ -8,11 +8,11 @@
 protocol MangaListViewOutput: AnyObject {
     var delegate: MangaListPresenterOutput? { get set }
     var view: MangaListViewInput? { get set }
-    
+
     var mangas: [Manga] { get }
     var filter: Filter { get set }
     var state: ViewState { get }
-    
+
     func fetchMangas()
     func openFilter(onApply: @escaping () -> Void)
     func fetchFilterFields()

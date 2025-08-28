@@ -12,15 +12,15 @@ class AppCoordinator: BaseCoordinator {
         let tabBarController = UITabBarController()
         navigationController.viewControllers = [tabBarController]
         navigationController.isNavigationBarHidden = true
-        
+
         let coordinators = [
             HomeCoordinator(navigationController: UINavigationController(), resolver: resolver),
             MangaListCoordinator(navigationController: UINavigationController(), resolver: resolver),
-            FavoritesCoordinator(navigationController: UINavigationController(), resolver: resolver)
+            FavoritesCoordinator(navigationController: UINavigationController(), resolver: resolver),
         ]
-        
+
         for (index, coordinator) in coordinators.enumerated() {
-            self.addChildCoordinator(coordinator)
+            addChildCoordinator(coordinator)
             coordinator.start()
             switch index {
             case 0:
@@ -33,7 +33,7 @@ class AppCoordinator: BaseCoordinator {
                 continue
             }
         }
-        
+
         tabBarController.viewControllers = coordinators.map { $0.navigationController }
     }
 }

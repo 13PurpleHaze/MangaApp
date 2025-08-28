@@ -12,7 +12,7 @@ struct LocalizedText: Decodable {
     var ja: String?
     var pl: String?
     var ru: String?
-    
+
     var language: String {
         let language = Locale.current.language.languageCode?.identifier ?? "en"
         switch language {
