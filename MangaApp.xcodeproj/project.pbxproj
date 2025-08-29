@@ -10,10 +10,21 @@
 		6DDD9B243A0B5E7EA66E88CB /* Pods_MangaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABBE3CC63499E8ED4D45E77 /* Pods_MangaApp.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A9645BAA2E605A7A00A7720C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A96436642E35005900A7720C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A964366B2E35005900A7720C;
+			remoteInfo = MangaApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2A1BEF37B2F4D1C1B29A6270 /* Pods-MangaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangaApp.release.xcconfig"; path = "Target Support Files/Pods-MangaApp/Pods-MangaApp.release.xcconfig"; sourceTree = "<group>"; };
 		8ABBE3CC63499E8ED4D45E77 /* Pods_MangaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MangaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A964366C2E35005900A7720C /* MangaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9645BA62E605A7A00A7720C /* MangaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66005230FBBC430BD9C305C /* Pods-MangaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangaApp.debug.xcconfig"; path = "Target Support Files/Pods-MangaApp/Pods-MangaApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -36,6 +47,11 @@
 			path = MangaApp;
 			sourceTree = "<group>";
 		};
+		A9645BA72E605A7A00A7720C /* MangaAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MangaAppTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +60,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DDD9B243A0B5E7EA66E88CB /* Pods_MangaApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9645BA32E605A7A00A7720C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				A964366E2E35005900A7720C /* MangaApp */,
+				A9645BA72E605A7A00A7720C /* MangaAppTests */,
 				A964366D2E35005900A7720C /* Products */,
 				8F384C08A4BEC4D9D861D4D3 /* Pods */,
 				EC7D4E5282928E7D3C447B3D /* Frameworks */,
@@ -73,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				A964366C2E35005900A7720C /* MangaApp.app */,
+				A9645BA62E605A7A00A7720C /* MangaAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,9 +117,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A964367F2E35005A00A7720C /* Build configuration list for PBXNativeTarget "MangaApp" */;
 			buildPhases = (
+				797778E5ACD4E69F95638CCE /* [CP] Check Pods Manifest.lock */,
 				A96456162E60355C00A7720C /* SwiftFormat */,
 				A96456172E60379200A7720C /* SwiftLint */,
-				797778E5ACD4E69F95638CCE /* [CP] Check Pods Manifest.lock */,
 				A96436682E35005900A7720C /* Sources */,
 				A96436692E35005900A7720C /* Frameworks */,
 				A964366A2E35005900A7720C /* Resources */,
@@ -112,6 +137,29 @@
 			productReference = A964366C2E35005900A7720C /* MangaApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A9645BA52E605A7A00A7720C /* MangaAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9645BAE2E605A7A00A7720C /* Build configuration list for PBXNativeTarget "MangaAppTests" */;
+			buildPhases = (
+				A9645BA22E605A7A00A7720C /* Sources */,
+				A9645BA32E605A7A00A7720C /* Frameworks */,
+				A9645BA42E605A7A00A7720C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9645BAB2E605A7A00A7720C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A9645BA72E605A7A00A7720C /* MangaAppTests */,
+			);
+			name = MangaAppTests;
+			packageProductDependencies = (
+			);
+			productName = MangaAppTests;
+			productReference = A9645BA62E605A7A00A7720C /* MangaAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -124,6 +172,10 @@
 				TargetAttributes = {
 					A964366B2E35005900A7720C = {
 						CreatedOnToolsVersion = 16.1;
+					};
+					A9645BA52E605A7A00A7720C = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = A964366B2E35005900A7720C;
 					};
 				};
 			};
@@ -144,12 +196,20 @@
 			projectRoot = "";
 			targets = (
 				A964366B2E35005900A7720C /* MangaApp */,
+				A9645BA52E605A7A00A7720C /* MangaAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A964366A2E35005900A7720C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9645BA42E605A7A00A7720C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,7 +306,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9645BA22E605A7A00A7720C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A9645BAB2E605A7A00A7720C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A964366B2E35005900A7720C /* MangaApp */;
+			targetProxy = A9645BAA2E605A7A00A7720C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A96436802E35005A00A7720C /* Debug */ = {
@@ -426,6 +501,50 @@
 			};
 			name = Release;
 		};
+		A9645BAC2E605A7A00A7720C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MangaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MangaApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MangaApp";
+				XROS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		A9645BAD2E605A7A00A7720C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MangaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MangaApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MangaApp";
+				XROS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -443,6 +562,15 @@
 			buildConfigurations = (
 				A96436802E35005A00A7720C /* Debug */,
 				A96436812E35005A00A7720C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9645BAE2E605A7A00A7720C /* Build configuration list for PBXNativeTarget "MangaAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9645BAC2E605A7A00A7720C /* Debug */,
+				A9645BAD2E605A7A00A7720C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

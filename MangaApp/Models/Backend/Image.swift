@@ -7,9 +7,9 @@
 
 struct Image: Decodable {
     let id: String
-    let attributes: Attributes
+    let attributes: ImageAttributes
+}
 
-    struct Attributes: Decodable {
-        let fileName: String
-    }
+struct ImageAttributes: Decodable {
+    let fileName: String
 }
