@@ -84,7 +84,7 @@ class MangaService: MangaServiceProtocol {
         }
     }
 
-    private func fetchMangaCoverImage(coverId: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func fetchMangaCoverImage(coverId: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let coverRequest = RequestBuilder().setPath("/cover/\(coverId)").build() else { return }
         networkManager.fetch(request: coverRequest) { (result: Result<MangaEntityResponse<Image>, Error>) in
             switch result {
