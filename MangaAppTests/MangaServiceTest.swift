@@ -61,7 +61,6 @@ final class MangaServiceTest: XCTestCase {
         ]
 
         sut.fetchMangas(filter: Filter()) { result in
-            print(result)
             switch result {
             case let .success(resMangas):
                 XCTAssertEqual(resMangas.count, mangas.data.count)
